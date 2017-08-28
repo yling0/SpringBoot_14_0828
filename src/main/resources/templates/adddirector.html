@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+
+<h1 th:text="${adddirectormessage}">This should not display</h1>
+
+<form action="#" th:action="@{/adddirector}" th:object="${newDirector}" method="post">
+<input type="hidden" th:field="*{id}" />
+
+<!--<span th:if="${#fields.hasErrors('fname')}" th:error="*{fname}">Name Error</span>-->
+<p>Name: <input type="text" th:field="*{name}"/></p>
+
+<!--<span th:if="${#fields.hasErrors('email')}" th:error="*{email}">Email Error</span>-->
+<p>Genre: <input type="text" th:field="*{genre}"/></p>
+<button type="submit" class="btn btn-dark" value="Submit">Submit</button>
+</form>
+
+</body>
+
+</html>
