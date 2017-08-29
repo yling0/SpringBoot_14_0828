@@ -4,5 +4,5 @@ import me.yling.springboot14.models.Director;
 import org.springframework.data.repository.CrudRepository;
 
 public interface DirectorRepository extends CrudRepository<Director, Long>{
-    Iterable<Director> findDirectorByNameIs(String partialString);
+
 }

@@ -3,16 +3,11 @@ package me.yling.springboot14.controllers;
 import me.yling.springboot14.models.Director;
 import me.yling.springboot14.models.Movie;
 import me.yling.springboot14.repositories.DirectorRepository;
+import me.yling.springboot14.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.HashSet;
-import java.util.Set;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class HomeController {
@@ -20,7 +15,10 @@ public class HomeController {
     @Autowired
     DirectorRepository directorRepository;
 
-    @GetMapping("/adddirector")
+    @Autowired
+    MovieRepository movieRepository;
+
+    @GetMapping("/")
     public String addDirector (Model model)
     {
         model.addAttribute("newDirector", new Director());
@@ -32,42 +30,64 @@ public class HomeController {
     public String postDirector(@ModelAttribute("newDirector") Director director)
     {
         directorRepository.save(director);
-        return "listd";
+        return "confirmd";
     }
 
-    @GetMapping("/addmovie")
-    public String addMovie (Model model)
+    @RequestMapping("/showd")
+    public String showDirector (Model model)
     {
-        model.addAttribute("newMovie", new Movie());
-        model.addAttribute("addmoviemessage", "Add movie");
-        return "addmovie";
-    }
-
-    @PostMapping("/addmovie")
-    public String postMovie(@ModelAttribute("newMovie") Movie movie, @ModelAttribute("director") Director finddir, Model model)
-    {
-        Set<Movie> movies = new HashSet<Movie>();
-        finddir.setMovies(movies);
-        directorRepository.save(finddir);
         model.addAttribute("directors", directorRepository.findAll());
-        return "index";
+        return "showd";
     }
 
-//    @GetMapping("/")
-//    public String listIndex(Model model)
-//    {
+    @RequestMapping("/addmovie/{id}")
+    public String addMovie (@PathVariable("id") long id, Model model)
+    {
+
+        Director finddir =directorRepository.findOne(id);
+        model.addAttribute("finddir", finddir);
+
+        Movie onemov = new Movie();
+        onemov.setDirector(finddir);
+        model.addAttribute("newMovie", onemov );
 //
-//       Director finddir = new Director();
-//        //add the list of the movie to the director's movie list
-//        finddir.setMovies(movies);
-//
-//        //Save the director to the database
-//        directorRepository.save(finddir);
-//
-//        //Grad all the directors from the database and send them to the template
-//        model.addAttribute("directors", directorRepository.findAll());
-//        return "index";
-//    }
+//        System.out.println(id);
+//        System.out.println(finddir.getId());
+
+        return "addmovie4dir";
+    }
+
+
+    @PostMapping("/addmovie4dir")
+    public @ResponseBody  String postMovie4d (@ModelAttribute ("newMovie") Movie onemov, @ModelAttribute ("director") Director finddir)
+    {
+//        System.out.println(onemov.getTitle());
+//        System.out.println(finddir.getId());
+
+        movieRepository.save(onemov);
+        return "Movie Added.";
+    }
+
+
+    @RequestMapping("/showm")
+    public String listMovie (Model model)
+    {
+        model.addAttribute("directors", directorRepository.findAll());
+        return "showm";
+    }
+
+    @RequestMapping("/listmovie/{id}")
+    public String listMovie (@PathVariable("id") long id, Model model)
+    {
+        model.addAttribute("directors", directorRepository.findOne(id));
+        return "showm";
+    }
+
+
+
+
+
+
 
 
 //    @RequestMapping("/")

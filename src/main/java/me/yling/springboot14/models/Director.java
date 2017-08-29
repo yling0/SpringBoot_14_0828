@@ -50,4 +50,11 @@ public class Director {
     public void setMovies(Set<Movie> movies) {
         this.movies = movies;
     }
+
+    public void addmovie(Movie m){
+        m.setDirector(this);
+        this.movies.add(m);
+    }
+
+
 }

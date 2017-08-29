@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<!--list persons-->
+<h1>All Movie</h1>
+<table>
+    <th:block th:each="director:${directors}">
+        <tr>
+            <td><p>Name</p></td>
+            <td><p>Genre</p></td>
+        </tr>
+        <tr>
+            <td><p th:text="${director.name}"/></td>
+            <td><p th:text="${director.genre}"/></td>
+        </tr>
+        <tr>
+            <td><p>Title</p></td>
+            <td><p>Year</p></td>
+            <td><p>Description</p></td>
+        </tr>
+        <th:block th:each="singlemovie:${director.movies}">
+            <tr>
+                <td><p th:text="${singlemovie.title}"/></td>
+                <td><p th:text="${singlemovie.year}"/></td>
+                <td><p th:text="${singlemovie.description}"/></td>
+            </tr>
+        </th:block>
+    </th:block>
+</table>
+
+</body>
+</html>
+
+<!--<th:block th:each="director:${directors}">-->
+<!--<tr>-->
+<!--<p></p>-->
+<!--<p th:text="${director.name}"/>-->
+<!--<p th:text="${director.genre}"/>-->
+<!--</tr>-->
+<!--<th:block th:each="singlemovie:${director.movies}">-->
+<!--<tr>-->
+<!--<p></p>-->
+<!--<p th:text="${singlemovie.title}"/>-->
+<!--<p th:text="${singlemovie.year}"/>-->
+<!--<p th:text="${singlemovie.description}"/>-->
+<!--</tr>-->
+<!--</th:block>-->
+<!--</th:block>-->

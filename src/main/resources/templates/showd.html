@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<!--list persons-->
+<h1>All Director</h1>
+<table>
+    <tr>
+        <td><p>Name</p></td>
+        <td><p>Genre</p></td>
+    </tr>
+
+    <th:block th:each="singledirector:${directors}">
+        <tr>
+            <td><p th:text="${singledirector.name}"/></td>
+            <td><p th:text="${singledirector.genre}"/></td>
+            <td><a th:href="@{/addmovie/{id}(id=${singledirector.id})}">Add movie for this director</a></td>
+            <td><a th:href="@{/listmovie/{id}(id=${singledirector.id})}">Show movies for this director</a></td>
+        </tr>
+    </th:block>
+
+</table>
+
+<a href="showm">Show all movies</a>
+
+
+</body>
+</html>
